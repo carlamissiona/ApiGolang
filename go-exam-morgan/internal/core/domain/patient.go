@@ -1,30 +1,18 @@
 package domain
 
-// Arith impliments the Arithmetic interface
-type Arith struct {
+type PatientObservation struct {
 }
 
-// NewArith creates a new Arith
-func New() *Arith {
-	return &Arith{}
+func NewPatientObservation() *Observation {
+	return &PatientObservation{}
 }
 
-// Addition gets the result of adding parameters a and b
-func (arith Arith) Addition(a int32, b int32) (int32, error) {
-	return a + b, nil
+
+
+func (pobv PatientObservation) GetTopConfirmed(observation_date string, max_result int32) Observation {
+	return Observation 
 }
 
-// Subtraction gets the result of subtracting parameters a and b
-func (arith Arith) Subtraction(a int32, b int32) (int32, error) {
-	return a - b, nil
-}
-
-// Multiplication gets the result of multiplying parameters a and b
-func (arith Arith) Multiplication(a int32, b int32) (int32, error) {
-	return a * b, nil
-}
-
-// Division gets the result of dividing parameters a and b
-func (arith Arith) Division(a int32, b int32) (int32, error) {
-	return a / b, nil
+func (pobv PatientObservation) GetAllConfirmed(orderby string) Observation {
+	return Observation 
 }

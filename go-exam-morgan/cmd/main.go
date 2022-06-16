@@ -3,17 +3,46 @@ package main
 import (
 	"log"
 	"os"
-
+	"github.com/joho/godotenv"
 	// application
-	"hex/internal/application/api"
-	"hex/internal/application/core/arithmetic"
+ 
 
 	// adapters
-	gRPC "hex/internal/adapters/framework/left/grpc"
-	"hex/internal/adapters/framework/right/db"
+   go-exam-morgan/adapters/postgres
 )
 
-func main() {
+func main() { 
+ 
+ 
+    program_attr := os.Args[0]
+    if (program_attr == "minimal"){
+        // Postgres + Fiber 
+
+        // get os postgres 
+        // env config
+
+        err := godotenv.Load(".environ_development")
+	      if err != nil {
+      		log.Fatalf("failed reading env file: %v", err)
+      	}
+
+    	 
+        db_info := os.Getenv("POSTGRES_URL") 
+       
+  	    defer db.Close()
+
+    }
+    else{
+       // Postgres + Fiber + Apigateway
+       
+    }
+     
+}
+
+
+
+
+  
 	var err error
 
 	dbaseDriver := os.Getenv("DB_DRIVER")
@@ -35,15 +64,5 @@ func main() {
 	// be of type DbPort
 	applicationAPI := api.NewApplication(dbAdapter, core)
 
-	// NOTE: We use dependency injection to give the grpc
-	// adapter access to the application, therefore
-	// the location of the port is inverted. That is
-	// the grpc adapter accesses the hexagon's driving port at the
-	// application boundary via dependency injection,
-	// therefore the type for the applicaitonAPI parameter
-	// that is to be injected into the gRPC adapter will
-	// be of type APIPort which is our hexagons left side
-	// port for driving adapters
-	gRPCAdapter := gRPC.NewAdapter(applicationAPI)
-	gRPCAdapter.Run()
+	
 }

@@ -1,3 +1,3 @@
-module go-exam-morgan
+module main
 
-go 1.13
+go 1.14

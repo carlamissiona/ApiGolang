@@ -1,42 +1,43 @@
 package in
 
-import (
-    "net/http" 
-"log"
-    "github.com/gin-gonic/gin"
-  
-    _"gomorganexam/clean/ports" 
-   "gomorganexam/clean/adapters/out/db" 
-)
+    import (
+        "net/http"
+        "log"
+        "github.com/gin-gonic/gin"
 
-var Server *gin.Engine
+        _ "gomorganexam/clean/ports"
+        "gomorganexam/clean/adapters/out/db"
+    )
 
- 
+var Server * gin.Engine
 
-func NewServer( db_adapter db.Adapter ) *gin.Engine {
-     Server = gin.Default()
-      // db_instance *sql.DB
-     // db.Exec()   NOTE *db.Database_Instance  errored
-    
+
+    // db_instance *sql.DB
+        // db.Exec()   NOTE *db.Database_Instance  errored
+
     // log.Println( ports.NewAPIService( db_instance  ) )
 
-    Server.GET("/", func(c *gin.Context) {
-         if( CheckInitData(db_adapter) ) {
-      log.Println("Ok")
- }  
-      c.String(http.StatusOK, "hello world  port")
+func NewServer(db_adapter db.Adapter) * gin.Engine {
+    Server = gin.Default()
+     
 
-      
+    Server.GET("/", func(c * gin.Context) {
+        if (CheckInitData(db_adapter)) {
+            log.Println("Ok")
+        }
+        c.String(http.StatusOK, "hello world  port")
+
+
     })
-  
-   return Server
-  
+
+    return Server
+
 }
-func Start(){
-  Server.Run()
+func Start() {
+    Server.Run()
 }
-func CheckInitData( db_adapter db.Adapter) bool {
-    var obs  = db_adapter.Pg_Execute(`SELECT * FROM tbl_countrypatient`)
-      log.Println(obs)
-   return true
+func CheckInitData(db_adapter db.Adapter) bool {
+    obs, err := db_adapter.Db.Query(`SELECT * FROM tbl_countrypatient`)
+    log.Println(obs); log.Println(err)
+    return true
 }

@@ -1,11 +1,13 @@
 package domain
 
-// type PatientObservation struct {
-// }
+type PatientObservation struct {
+  Data Observation
+}
 
-// func NewPatientObservation() *Observation {
-// 	return &PatientObservation{}
-// }
+
+func NewPatientObservation() PatientObservation {
+	return PatientObservation{}
+}
 
 
 

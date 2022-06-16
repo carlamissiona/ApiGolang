@@ -7,20 +7,15 @@ import (
   _ "github.com/lib/pq"
   _"database/sql"
 	// application
- 
- "gomorganexam/ports" 
-  "gomorganexam/adapters" 
+  
+  "gomorganexam/clean/adapters/in" 
 	// adapters
    // go-exam-morgan/adapters/postgres
 )
 
  
 
- type ApplicationAdapter interface {
-  Type string
-  Adapter interface{}
-}
-
+ 
 
 func main() { 
   
@@ -31,8 +26,9 @@ func main() {
                 // minimal using gofiber + postgres + openAPI
          
                 // get os env postgres 
+              web_adapter := in.NewServer() 
+
               
-             
                      
             }
       }

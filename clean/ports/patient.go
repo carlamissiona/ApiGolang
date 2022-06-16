@@ -1,32 +1,35 @@
 package ports
 
-import "gomorganexam/domain" 
-
-type ApplicationPort interface {
-  Type string
-  Port interface{}
-}
+import (
+  "gomorganexam/clean/core/domain" 
+  "database/sql"
+  "log"
+  )
+ 
   
 
 type ServicePatientsAPI interface { 
-	SvcTopPatientsAPI() domain.Patient 
+	GetTopConfirmed(observation_date string, max_result int32) domain.PatientObservation 
+  GetAllConfirmed(pagelimit int32) domain.PatientObservation
 }
 
-
-
-type Patient interface {
-	GetTopConfirmed(observation_date string, max_result int32) domain.Observation
-	GetAllConfirmed(pagelimit int32) domain.Observation
+ type Service struct {
+	Database   *sql.DB
+  
 }
 
-type Service struct {
-	Database   ApplicationAdapter
-  App        ApplicationPort
-}
+ func NewAPIService(db *sql.DB ) *Service {
+   
+    return &Service{
+    		Database: db, 
+    	}
+   
+ }
 
-
-func (svc *Service) GetTopConfirmed(author *Author)   {
- log.Println("No Implementation")
+func (svc *Service) GetTopConfirmed(observation_date string, max_result int32)  {
+   // svc.Database 
+   
+  
 }
 
 

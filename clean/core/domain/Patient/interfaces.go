@@ -11,8 +11,3 @@ type Observation struct {
 	date      string
 	countries Country
 }
-
-type Patient interface {
-	GetTopConfirmed(observation_date string, max_result int32) Observation
-	GetAllConfirmed(max_result int32) Observation
-}

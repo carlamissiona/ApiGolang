@@ -2,69 +2,74 @@ package db
 
 import (
   "database/sql"
-    "encoding/json" 
-    "fmt"
-  "os"
+    _"encoding/json" 
+    _"fmt"
+  _ "os" 
     "log" 
    _ "net/http"
-  "github.com/joho/godotenv"
+  _"github.com/joho/godotenv"
   _ "github.com/lib/pq"
 )
 
- type Adapter struct {
-	db *sql.DB
+type DBAdapter interface{
+ NewAdapter(driver_db, conn_str string) (*Adapter)
+ Desc_DB() *sql.DB 
+ Query(sqlStatement string) *sql.Rows
+ Execute(sqlStatement string) sql.Result
+}
+
+type Adapter struct {
+	db      *sql.DB
+  driver  string
 }
 var Database_Instance *sql.DB
- func NewAdapter(driver_db, conn_str string) (*Adapter, error) {
+func NewAdapter(driver_db, conn_str string) (*Adapter) {
 	  
-      err := godotenv.Load(".environ_development")
-      if err != nil {
-        log.Fatalf("failed reading env file: %v", err)
-      }
-
-      db_info := os.Getenv("POSTGRES_URL") 
-
-
-
     
       //  db pg
-      Database_Instance
-      , err := sql.Open("postgres", db_info)
+      Database_Instance, err := sql.Open(driver_db, conn_str)
       if err != nil {
         panic(err)
       }
       
-      defer .Close()
+      defer Database_Instance.Close()
     
-      err = db.Ping()
+      err = Database_Instance.Ping()
       if err != nil {
         log.Fatalf("failed No DB connection %v", err)
       }
       // cCheck Initial Data
      	 
+    return &Adapter{
+      db: Database_Instance,
+    }
     
-   
-} 
-func Pg_DB() *sql.DB{
- return Database_Instance
+}  
+
+func Desc_DB() *sql.DB{
+  return Database_Instance
   
 }
-
-func Pg_Execute(sqlStatement string) *sql.Rows {
-     
+ 
+func (a *Adapter)Query(sqlStatement string) *sql.Rows {
+    var rows *sql.Rows = nil
+  
+    log.Println("Database_Instance")
+    log.Println(Database_Instance)
   // sqlStatement := `SELECT * FROM TBL_PATIENTS)`
-      rows, err := db.Query(sqlStatement)
+      rows, err := Database_Instance.Query(sqlStatement)
       if err != nil {
-          return err
+            log.Println("error ->", err)
       } 
   return rows
 }
-func Pg_ExecuteNoResult(sqlStatement string) *sql.Rows {
-     
+func (a *Adapter)Execute(sqlStatement string) sql.Result {
+       var rows sql.Result = nil
   // sqlStatement := `SELECT * FROM TBL_PATIENTS)`
-      rows, err := db.Exec(sqlStatement)
+      rows, err := Database_Instance.Exec(sqlStatement)
       if err != nil {
-          return err
+           log.Println("error ->", err)
+        
       } 
-  return rows
+   return rows
 }

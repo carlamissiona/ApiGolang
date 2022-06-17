@@ -37,7 +37,34 @@ func Start() {
     Server.Run()
 }
 func CheckInitData(db_adapter db.Adapter) bool {
-    obs, err := db_adapter.Db.Query(`SELECT * FROM tbl_countrypatient`)
-    log.Println(obs); log.Println(err)
+    // obs, err := db_adapter.Db.QueryRow(`SELECT Count(*) FROM tbl_countrypatient`).Scan(&count)
+var count int32
+    err := db_adapter.Db.QueryRow(`SELECT Count(*) FROM tbl_countrypatient`).Scan(&count)
+ 
+    switch {    
+case err != nil:
+       log.Printf("Error CheckInitData" )
+    log.Fatal(err)
+default:
+  log.Printf("Number of rows are %s\n", count)
+}
+  // log.Println("=====obs====");
+    
+  //   log.Println(obs); log.Println(err)
+  //   log.Println("=====obs====");
+  //   if ( obs == nil ){
+  //      log.Println("=====empty obs====");log.Println("=====empty obs====");
+  //   }else{
+  //      log.Println("=====obs has values====");
+  //   }
     return true
 }
+
+
+// err := db.QueryRow("SELECT COUNT(*) FROM main_table").Scan(&count)
+// switch {    
+// case err != nil:
+//     log.Fatal(err)
+// default:
+//     fmt.Printf("Number of rows are %s\n", count)
+// }

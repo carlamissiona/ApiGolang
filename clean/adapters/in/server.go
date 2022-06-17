@@ -14,7 +14,7 @@ type WebServerAdapter interface {
 	CheckServer()
   Start()
   
-}
+} 
 
 
 type WebAdapter struct {

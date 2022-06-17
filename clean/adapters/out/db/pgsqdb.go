@@ -22,7 +22,7 @@ type Adapter struct {
     Data  *sql.DB
     Driver string
 }
-
+ 
 var Database_Instance  *sql.DB
 
 func NewAdapter(driver_db, conn_str string)( *Adapter) {

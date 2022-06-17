@@ -48,7 +48,7 @@ func main() {
     }
     log.Println("Hi Postg API")
 }
-
+  
 
 
 func checkInitData(db_adapter *db.Adapter) bool {

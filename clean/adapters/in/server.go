@@ -1,7 +1,7 @@
 package in
 
     import (
-        "net/http"
+        // "net/http"
         // "log"
         "github.com/gin-gonic/gin"
 
@@ -25,14 +25,7 @@ func NewServer() (*WebAdapter){
     Server = gin.Default()
   
 
-    Server.GET("/", func(c * gin.Context) {
-        // if (CheckInitData(db_adapter)) {
-            
-        // }
-        c.String(http.StatusOK, "Ok Status")
-
-
-    })
+   
 
    return &WebAdapter {
         HttpEngine: Server,

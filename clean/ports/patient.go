@@ -21,9 +21,9 @@ type ServicePatientsAPI interface {
 }
 
 type Service struct {
-    Data * db.Adapter
+    Data *db.Adapter
     Records[] byte
-    Server * in .WebAdapter
+    Server *in.WebAdapter
 
 }
 
@@ -36,7 +36,7 @@ func NewAPIService(data * db.Adapter, records[] byte, engine * in .WebAdapter)( 
     }
 
 }
-func(svc * Service) Start(hasRecords bool) {
+func(svc *Service) Start(hasRecords bool) {
 
     if !hasRecords {
 
@@ -47,39 +47,50 @@ func(svc * Service) Start(hasRecords bool) {
     svc.Server.Start()
 }
 
-func(svc * Service) GetTopConfirmed(observation_date string, max_result int32) {
+func(svc *Service) GetTopConfirmed(observation_date string, max_result int32) {
     // svc.Database 
 
 
 }
 
 
-func(svc * Service) GetAllConfirmed(pagelimit int32) {
+func(svc *Service) GetAllConfirmed(pagelimit int32) {
     log.Println("No Implementation")
 }
 
 func csv_ToPostgres() {
 
 
-    csvfile, err: = os.Open("data.csv")
+    csvfile, err := os.Open("data.csv")
     if err != nil {
-        log.Fatal(err)
+        log.Println("=>ERROR!! NO CSV FILE \n %v \n=>END OF ERROR!! NO CSV FILE " , err ); 
+        handl_err_nocsv()
     }
 
     // remember to close the file at the end of the program
     defer csvfile.Close()
-
+ 
     // read csv values using csv.Reader
-    csv_reader: = csv.NewReader(csvfile)
+    csv_reader := csv.NewReader(csvfile)
 
-    data, err: = csv_reader.ReadAll()
+    data, err := csv_reader.ReadAll()
     if err != nil {
-        log.Fatal(err)
+        log.Println("=>ERROR!! CANT READ CSV FILE \n %v \n=>END OF ERROR!! NO CSV FILE " , err ); 
+        
+        handl_err_readcsv()
     }
     log.Println("API data")
+    log.Printf("=>DEBUG!! API DATA")
     log.Println(data)
+    log.Printf("=>END OF DEBUG!! API DATA")
+
+}
+ 
+func handl_err_nocsv() {
 
 
-
-
+  
+}
+func handl_err_readcsv(){
+  
 }

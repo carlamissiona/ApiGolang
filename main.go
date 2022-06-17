@@ -54,15 +54,16 @@ func main() {
 func checkInitData(db_adapter *db.Adapter) bool {
     // obs, err := db_adapter.Db.QueryRow(`SELECT Count(*) FROM tbl_countrypatient`).Scan(&count)
     var count int32 = 0
-    err := db_adapter.Data.QueryRow(`SELECT Count(*) FROM tbl_countrypatient`).Scan( & count)
+    err := db_adapter.Data.QueryRow(`SELECT Count(*) FROM covid_observations`).Scan( & count)
     if err != nil{
-         log.Println("Error CheckInitData") 
-            log.Println(err)
+         log.Println("=>ERROR!! Check PG DATABASE DATA") 
+           log.Println(err)
+            log.Println("=>END OF ERROR!! Check PG DATABASE DATA") 
             return false      
     }
      
-      log.Printf("Number of rows are %s\n", count)
-    
+      log.Printf("=>DEBUG!! Number of rows are %s\n", count)
+      log.Printf("=>DEBUG!! Number of rows are %s\n", count)
     
     return true
 }
